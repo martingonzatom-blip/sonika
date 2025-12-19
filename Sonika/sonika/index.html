@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sonika</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{--black:#000;--muted:#666}
+    *{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"DM Sans", sans-serif;
+  background:#fff;
+  color:#111;
+  scroll-behavior:smooth;
+}
+    header{position:sticky;top:0;z-index:60;background:#000;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:12px 22px}
+    header .nav a{color:#fff;text-decoration:none;margin-left:16px;font-size:13px;cursor:pointer}
+    header .logo{font-weight:600;cursor:pointer}
+
+    section{padding:56px 20px}
+
+    /* INICIO */
+    #inicio{text-align:center}
+    #inicio h1{font-size:26px;margin:0 0 8px}
+    #inicio p{max-width:680px;margin:0 auto 22px;color:#444}
+    #inicio img{width:260px;height:auto;margin:18px 0}
+    .cta{display:inline-block;padding:10px 20px;background:#2c2421;color:#fff;border-radius:24px;border:none;cursor:pointer}
+
+    /* Banner del inicio */
+/* Banner sin padding ni márgenes */
+#inicio .banner {
+  width: 100vw;         /* asegura ancho total de la pantalla */
+  margin-left: calc(-50vw + 50%); /* corrige el padding del section */
+  position: relative;
+}
+
+#inicio .banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0px;
+}
+
+#inicio {
+  padding: 0; /* para que el banner toque los bordes exactos */
+}
+
+/* Fondo negro para el botón */
+.banner-black {
+  width: 100%;
+  background: #000;
+  padding: 40px 0;        /* espacio para que el botón respire */
+  text-align: center;
+}
+
+/* Botón dentro del fondo negro */
+.banner-black .cta {
+  background: #000000;
+  color: #ffffff;
+  padding: 14px 28px;
+  border-radius: 24px;
+  font-weight: 100;
+  font-family: "DM Sans", sans-serif;
+
+  font-size: 2.2rem;     /* tamaño del texto */
+  padding: 12px 28px;    /* alto y ancho del botón */
+  border-radius: 8px;    /* más redondeado */
+
+  
+}
+
+    /* DESTACADOS -> fondo negro */
+    .featured{
+      margin-top:98px;
+      background:#000;
+      color:#fff;
+      padding:40px 20px;
+      border-radius:12px;
+    }
+    .featured h2{text-align:center;margin-bottom:90;color:#000000; font-size: 2.2rem;}
+    .products-row{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;}
+    .products-row .product-card{width:160px;text-align:center;cursor:pointer; margin-top: 90px;}
+    .product-card img{width:100%;height:auto;display:block}
+
+    /* TIENDA */
+    #tienda .contenido{display:flex;gap:40px;align-items:flex-start;max-width:1200px;margin:0 auto}
+    .filtros{width:170px}
+    .productos-grid{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+
+  
+.productos-grid .producto {
+    flex: 1 1 300px;                          /* ancho de cada tarjeta */
+  max-width: 300px;
+
+  cursor: pointer;
+  padding: 18px;
+  border-radius: 12px;
+
+  background: #111;            /* Fondo negro */
+  color: #fff;                 /* Texto blanco */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  transition: transform .25s ease, box-shadow .25s ease;
+  text-align: center;          /* Centra el texto */
+}
+
+.product-card {
+  flex: 1 1 300px;                          /* ancho de cada tarjeta */
+  max-width: 300px;
+
+  text-align: center;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.192);
+  transition: transform .25s ease, box-shadow .25s ease;
+
+  background: rgba(0, 0, 0, 0.884); /* negro con 15% de opacidad */
+  backdrop-filter: blur(4px);      /* opcional: efecto "vidrio" */
+  padding: 15px;
+
+  
+}
+
+
+.productos-grid .producto:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+
+.productos-grid .producto img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border-radius: 10%;   /* ← acá SÍ funciona */
+  margin: 0 auto 10px;
+}
+
+
+
+
+    /* PRODUCTO */
+    #producto-page{display:none;max-width:1100px;margin:0 auto}
+    .producto-section{display:flex;gap:40px;align-items:flex-start}
+    .producto-section img{width:420px;height:auto}
+    .producto-info h1{margin:0 0 8px}
+    .producto-info .precio{color:var(--muted);margin-bottom:16px}
+    .btn-row{display:flex;gap:12px}
+    .btn{padding:12px 28px;border-radius:28px;border:none;cursor:pointer}
+    .btn.primary{background:#000;color:#fff}
+    .btn.secondary{background:#fff;color:#000;border:1px solid #ddd}
+
+    /* MODAL */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center}
+    .modal-card{background:#fff;padding:20px;border-radius:12px;width:360px}
+    .variant-list{display:flex;gap:12px}
+    .variant{cursor:pointer;border:2px solid transparent;border-radius:8px;overflow:hidden}
+    .variant.selected{border-color:#111}
+
+    /* CHECKOUT */
+    #checkout-section{display:none;max-width:720px;margin:0 auto}
+    .form-group{margin-bottom:12px}
+    .form-group label{display:block;margin-bottom:6px;color:#333}
+    .form-group input{width:100%;padding:10px;border:1px solid:#ccc;border-radius:8px}
+    .summary{background:#fafafa;padding:12px;border-radius:8px;margin-top:16px}
+    .btn-finalizar{margin-top:14px;padding:12px 26px;border-radius:20px;background:#000;color:#fff;border:none;cursor:pointer}
+
+    /* SOBRE NOSOTROS */
+    .sobre-nosotros{
+      background:#ffffff;
+      text-align:center;
+    }
+
+    .sobre-nosotros h2 {
+  font-family: "DM Sans", sans-serif;
+      font-size: 32px;  /* Cambiás el tamaño */
+
+    }
+
+    .sobre-nosotros p {
+    max-width: 800px;
+    margin: 0 auto;
+    color: #ccc;      /* Cambiás el color */
+    font-size: 22px;  /* Cambiás el tamaño */
+    line-height: 1.6; /* Mejor lectura */
+    font-weight: 300;
+    font-family: "DM Sans", sans-serif;
+}
+
+    /* CONTACTO */
+    #contacto{
+      background:#111;
+      color:#fff;
+      text-align:center;
+    }
+    #contacto input, #contacto textarea{
+      width:100%;
+      max-width:500px;
+      padding:12px;
+      margin-bottom:12px;
+      border-radius:8px;
+      border:none;
+    }
+    #contacto button{
+      padding:12px 28px;
+      border:none;
+      background:#fff;
+      color:#000;
+      border-radius:24px;
+      cursor:pointer;
+    }
+
+    .contact-form{
+  display: flex;
+  flex-direction: column;   /* 👈 esto los pone uno arriba del otro */
+  align-items: center;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.contact-form input,
+.contact-form textarea{
+  width: 100%;
+  max-width: 520px;
+}
+
+
+    footer{background:#000;color:#fff;padding:18px 22px;display:flex;justify-content:space-between}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .productos-grid{grid-template-columns:repeat(2,1fr)}
+      .producto-section{flex-direction:column;align-items:center}
+      .producto-section img{width:320px}
+    }
+    @media (max-width:520px){
+      .productos-grid{grid-template-columns:1fr}
+      header{padding:10px}
+      .featured{padding:20px}
+    }
+
+
+/* espacio y centrado para la fila de productos (usa las clases que ya tenés) */
+.featured {
+  padding: 80px 20px; /* espacio arriba/abajo de toda la sección */
+  text-align: center;
+    background: #ffffff;
+
+}
+
+.featured .products-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 100px;     /* <- Aumentá este número para más distancia entre tarjetas */
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+/* tarjetas — mantiene tamaño uniforme */
+.product-card {
+  flex: 1 1 300px;                          /* ancho de cada tarjeta */
+  max-width: 300px;
+
+  text-align: center;
+  padding: 88px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.192);
+  transition: transform .25s ease, box-shadow .25s ease;
+
+  background: rgba(0, 0, 0, 0.884); /* negro con 15% de opacidad */
+  backdrop-filter: blur(4px);      /* opcional: efecto "vidrio" */
+  padding: 20px;
+
+  
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+
+/* imagen fija y centrada dentro de la tarjeta */
+.product-card img {
+  text-align: center;
+  width: 100%;
+  height: 190px;       /* alto fijo para que todas sean iguales */
+  margin: 0 auto 10px;
+  border-radius: 22px;
+}
+
+/* título / precio */
+.product-card div:first-of-type { /* nombre (si lo tenés como div) */
+  margin-top: 8px;
+  color: #fff;
+  font-weight: 600;
+}
+.product-card div[style] { /* precio en tu markup actual */
+  color: var(--muted);
+  margin-top:6px;
+}
+
+
+/* Hover */
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.45);
+}
+
+/* Título */
+.product-card h3 {
+  margin: 10px 0 5px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+    text-align: center;
+
+}
+
+/* Precio */
+.product-card p {
+  margin: 0;
+  color: #bbb;
+  font-size: 16px;
+    text-align: center;
+
+}
+
+
+.producto-galeria {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#prod-img-main {
+  width: 420px;
+  border-radius: 12px;
+}
+
+.producto-thumbs {
+  display: flex;
+  gap: 10px;
+}
+
+.producto-thumbs img {
+  width: 80px;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.producto-thumbs img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.producto-thumbs img.active {
+  opacity: 1;
+  outline: 2px solid #000;
+}
+
+
+.filtros h3{
+  font-family: "DM Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 16px;
+}
+
+.filtros a{
+  display: block;              /* uno debajo del otro */
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+
+  color: #000;                 /* negro Sonika */
+  text-decoration: none;       /* chau subrayado */
+  margin-bottom: 10px;
+
+  cursor: pointer;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.filtros a:hover{
+  opacity: 0.6;
+  transform: translateX(2px);  /* micro feedback */
+}
+
+.productos-relacionados{
+  padding: 100px 80px;
+  background-color: #fff;
+}
+
+.productos-relacionados h2{
+  font-family: "DM Sans", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 40px;
+  color: #000;
+}
+
+.productos-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.producto-card{
+  text-align: left;
+  cursor: pointer;
+}
+
+.producto-card img{
+  width: 100%;
+  max-width: 260px;
+  margin-bottom: 16px;
+}
+
+.producto-card h3{
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #000;
+}
+
+.producto-card p{
+  font-size: 14px;
+  color: #555;
+}
+
+
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo" id="logo">Sonika</div>
+<nav class="nav">
+  <a href="#inicio" data-nav>Inicio</a>
+  <a href="#tienda" data-nav>Tienda</a>
+  <a href="#" id="open-cart">Carrito (<span id="cart-count">0</span>)</a>
+</nav>
+
+</header>
+
+<main>
+  <!-- INICIO -->
+ <section id="inicio">
+  
+<section id="inicio">
+
+  <!-- Banner a ancho completo -->
+  <div class="banner">
+    <img src="Banner2.png" alt="Banner principal">
+  </div>
+
+  <!-- Fondo negro para el botón -->
+  <div class="banner-black">
+    <button class="cta" id="go-to-store">Ver modelos</button>
+  </div>
+
+</section>
+
+
+
+    <div class="featured">
+      <h2>PRODUCTOS DESTACADOS</h2>
+      <div class="products-row" aria-hidden="false">
+        <div class="product-card" data-open="sennheiser-hd200"><img src="Imagenes/senheisser1.jpg" alt="Sennheiser"><div>Sennheiser HD 200</div><div ">$144.000</div></div>
+        <div class="product-card" data-open="bose-qc45"><img src="Imagenes/bose45-1.jpg" alt="Bose"><div>Bose QuietComfort 45</div><div ">$600.000</div></div>
+        <div class="product-card" data-open="sony-ch520"><img src="Imagenes/sony520-1.jpg" alt="Sony"><div>Sony WH-CH520</div><div ">$240.000</div></div>
+      </div>
+    </div>
+
+     <!-- SOBRE NOSOTROS -->
+  <section class="sobre-nosotros">
+    <h2>SOBRE NOSOTROS</h2>
+    <p>
+      En Sonika creemos que el sonido no es solo algo que se escucha: es algo que se siente.
+      Seleccionamos auriculares que combinan diseño, comodidad y fidelidad para acompañarte en tus días,
+      ya sea estudiando, viajando o creando. Nuestra misión es acercarte la mejor experiencia sonora posible.
+    </p>
+  </section>
+
+    <!-- CONTACTO -->
+<section id="contacto">
+  <h2>Contacto</h2>
+  <p>¿Tenés dudas o necesitás ayuda? Escribinos.</p>
+
+  <div class="contact-form">
+    <input id="contact-name" type="text" placeholder="Nombre completo">
+    <input id="contact-email" type="email" placeholder="Correo electrónico">
+    <textarea id="contact-msg" rows="4" placeholder="Tu mensaje..."></textarea>
+    <button id="contact-send">Enviar mensaje</button>
+  </div>
+</section>
+
+
+  </section>
+
+  <!-- TIENDA -->
+  <section id="tienda">
+    <div class="contenido">
+      <aside class="filtros">
+        <h3>Explora</h3>
+        <a href="#" data-filter="all">• Todos</a><br>
+        <a href="#" data-filter="new">• Nuevos</a><br>
+        <a href="#" data-filter="brands">• Marcas</a>
+      </aside>
+
+      <div class="productos-grid" id="productos-grid">
+        <!-- Productos inyectados por JS -->
+      </div>
+    </div>
+  </section>
+
+ 
+
+
+  <!-- PRODUCTO (detalle) -->
+  <section id="producto-page">
+    <div class="producto-section">
+    <img id="prod-img-main" src="" alt="producto principal">
+  <div class="producto-thumbs" id="prod-thumbs"></div>
+      <div class="producto-info">
+        <h1 id="prod-name"></h1>
+        <div id="prod-price" class="precio"></div>
+        <div class="btn-row">
+          <button class="btn primary" id="add-to-cart">Añadir al carrito</button>
+          <button class="btn secondary" id="buy-now">Comprar ahora</button>
+        </div>
+        <div style="margin-top:12px;color:var(--muted)" id="prod-desc"></div>
+      </div>
+    </div>
+
+      <section class="productos-relacionados">
+    <h2>También te puede interesar</h2>
+
+    <div class="productos-grid">
+      <article class="producto-card">
+        <img src="Imagenes/bose45-1.jpg" alt="Bose">
+        <h3>Bose QuietComfort 45</h3>
+        <p>$600.000</p>
+      </article>
+
+      <article class="producto-card">
+        <img src="Imagenes/sony520-1.jpg" alt="Sony">
+        <h3>Sony WH-CH520</h3>
+        <p>$240.000</p>
+      </article>
+
+      <article class="producto-card">
+        <img src="Imagenes/senheisser1.jpg" alt="Sennheiser">
+        <h3>Sennheiser HD 200</h3>
+        <p>$144.000</p>
+      </article>
+    </div>
+  </section>
+
+  </section>
+
+  <!-- CHECKOUT -->
+  <section id="checkout-section">
+    <h2>Finalizar compra</h2>
+    <div class="form-group"><label>Nombre completo</label><input id="inp-name" type="text" placeholder="Nombre y apellido"></div>
+    <div class="form-group"><label>Dirección</label><input id="inp-address" type="text" placeholder="Calle, número"></div>
+    <div class="form-group"><label>Ciudad</label><input id="inp-city" type="text" placeholder="Ciudad"></div>
+    <div class="form-group"><label>Código Postal</label><input id="inp-postal" type="text" placeholder="Código postal"></div>
+    <div class="form-group"><label>Método de pago</label><input id="inp-pay" type="text" placeholder="Tarjeta / MercadoPago / Transferencia"></div>
+
+    <div class="summary" id="order-summary">
+      <!-- Resumen inyectado -->
+    </div>
+
+    <button class="btn-finalizar" id="finalize">Pagar</button>
+  </section>
+</main>
+
+<!-- MODAL VARIANTES -->
+<div id="modal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <h3>Elegí tu modelo</h3>
+    <div class="variant-list">
+      <div class="variant" data-variant="modelo1"><img src="Imagenes/senheisser1.jpg" width="150" alt="modelo1"></div>
+      <div class="variant" data-variant="modelo2"><img src="Imagenes/senheisserblanco.png" width="150" alt="modelo2"></div>
+    </div>
+    <button id="confirm-add" style="margin-top:12px;padding:10px 14px;border-radius:8px;background:#000;color:#fff;border:none">Agregar al carrito</button>
+  </div>
+</div>
+
+
+
+<footer>
+  <div>Sonika</div>
+  <div>Tienda</div>
+</footer>
+
+<script>
+// --- Data (puedes reemplazar con llamada a API) ---
+const PRODUCTS = [
+  { 
+    id:'sennheiser-hd200', 
+    name:'Sennheiser HD 200', 
+ images:[
+    'Imagenes/senheisser1.jpg',
+    'Imagenes/senheisser2.jpg'
+  ],   variants:[
+    {
+      id:'negro',
+      label:'Negro',
+      img:'Imagenes/sony520-negro.jpg'
+    },
+    {
+      id:'azul',
+      label:'Azul',
+      img:'Imagenes/sony520-azul.jpg'
+    }
+  ],
+  
+  price:144000, 
+    desc:'Auriculares cerrados pensados para ofrecer un sonido equilibrado y limpio. Tienen buen aislamiento pasivo y una construcción ligera que permite usarlos durante horas sin molestias.' 
+  },
+
+  { 
+    id:'bose-qc45', 
+    name:'Bose QuietComfort 45',images:[
+    'Imagenes/bose45-1.jpg',
+    'Imagenes/bose45-2.png'
+  ],  variants:[
+    {
+      id:'negro',
+      label:'Negro',
+      img:'Imagenes/sony520-negro.jpg'
+    },
+    {
+      id:'azul',
+      label:'Azul',
+      img:'Imagenes/sony520-azul.jpg'
+    }
+  ],
+    price:600000, 
+    desc:'La reconocida cancelación activa de ruido de Bose acompañada de uno de los diseños más cómodos del mercado. Ideales para viajar, trabajar o estudiar sin distracciones, con un sonido cálido y detallado.' 
+  },
+
+  { 
+    id:'sony-ch520', 
+    name:'Sony WH-CH520',images:[
+    'Imagenes/sony520-1.jpg',
+    'Imagenes/sony520-2.jpg'
+  ],  variants:[
+    {
+      id:'negro',
+      label:'Negro',
+      img:'Imagenes/sony520-negro.jpg'
+    },
+    {
+      id:'azul',
+      label:'Azul',
+      img:'Imagenes/sony520-azul.jpg'
+    }
+  ],
+    price:240000, 
+    desc:'Livianos, prácticos y con una autonomía sobresaliente. Ofrecen un sonido claro con buena presencia en voces y conectividad estable para uso diario.' 
+  },
+
+  { 
+    id:'sennheiser-hd206', 
+    name:'Sennheiser HD 206',images:[
+    'Imagenes/sonyverde.png',
+    'Imagenes/senheisser2.jpg'
+  ], 
+    price:150000, 
+    desc:'Modelo clásico de Sennheiser: sonido equilibrado, peso muy bajo y comodidad garantizada. Funcionan bien para escuchar música, editar contenido o usar durante largas jornadas.' 
+  },
+
+  { 
+    id:'jbl-520bt', 
+    name:'JBL Tune 520BT', images:[
+    'Imagenes/jbl.jpg',
+    'Imagenes/senheisser2.jpg'
+  ], 
+    price:65000, 
+    desc:'Auriculares Bluetooth pensados para un uso cotidiano. Destacan sus graves potentes, su diseño liviano y la batería capaz de acompañar todo el día sin necesidad de recargar.' 
+  },
+
+  { 
+    id:'bose-soundlink-2', 
+    name:'Bose SoundLink II',images:[
+    'Imagenes/boseII-1.jpg',
+    'Imagenes/senheisser2.jpg'
+  ], 
+    price:550000, 
+    desc:'Cómodos como pocos y con el sonido característico de Bose: cálido, balanceado y envolvente. Son perfectos para largas sesiones de música o trabajo gracias a su diseño ligero y robusto.' 
+  },
+
+];
+
+// --- Estado ---
+let cart = JSON.parse(localStorage.getItem('cartData') || '[]');
+let selectedProduct = null;
+let selectedVariant = null;
+
+// --- Helpers ---
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+function showSection(id){
+  // hide all main sections
+  ['inicio','tienda','producto-page','checkout-section'].forEach(s => {
+    const el = document.getElementById(s);
+    if(!el) return;
+    el.style.display = (s === id) ? 'block' : 'none';
+  });
+  // close modal if open
+  closeModal();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// --- Render tienda ---
+function renderProducts(){
+  const grid = document.getElementById('productos-grid');
+  if(!grid) return;
+
+  grid.innerHTML = '';
+
+  PRODUCTS.forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'producto';
+    d.dataset.id = p.id;
+
+    // usa siempre la primera imagen como portada
+    const cover = p.images && p.images.length ? p.images[0] : '';
+
+    d.innerHTML = `
+      <img src="${cover}" alt="${p.name}">
+      <div style="margin-top:8px;font-weight:600">${p.name}</div>
+      <div style="color:var(--muted)">$${p.price.toLocaleString()}</div>
+    `;
+
+    d.addEventListener('click', () => openProduct(p.id));
+    grid.appendChild(d);
+  });
+}
+
+// --- Cart UI ---
+function updateCartUI(){
+  const el = $('#cart-count');
+  const count = cart.reduce((s,i)=>s + (i.qty||1), 0);
+  if(el) el.textContent = count;
+  localStorage.setItem('cartData', JSON.stringify(cart));
+}
+
+// --- Open product detail ---
+function openProduct(productId){
+  const p = PRODUCTS.find(x=>x.id===productId);
+  if(!p) return;
+  selectedProduct = p;
+  selectedVariant = null;
+  // populate product view
+const mainImg = $('#prod-img-main');
+const thumbs = $('#prod-thumbs');
+
+mainImg.src = p.images[0];
+thumbs.innerHTML = '';
+
+p.images.forEach((src, index) => {
+  const img = document.createElement('img');
+  img.src = src;
+  if(index === 0) img.classList.add('active');
+
+  img.addEventListener('click', () => {
+    mainImg.src = src;
+    $$('#prod-thumbs img').forEach(i => i.classList.remove('active'));
+    img.classList.add('active');
+  });
+
+  thumbs.appendChild(img);
+});
+  $('#prod-name').textContent = p.name;
+  $('#prod-price').textContent = '$' + p.price.toLocaleString();
+  $('#prod-desc').textContent = p.desc;
+  showSection('producto-page');
+}
+
+// --- Modal control ---
+function openModal(){
+  selectedVariant = null;
+  $$('.variant').forEach(v=>v.classList.remove('selected'));
+  $('#modal').style.display = 'flex';
+  $('#modal').setAttribute('aria-hidden','false');
+}
+function closeModal(){
+  $('#modal').style.display = 'none';
+  $('#modal').setAttribute('aria-hidden','true');
+}
+
+// --- Cart operations ---
+function addToCart(quantity = 1){
+  if(!selectedProduct) return;
+  const key = selectedProduct.id + (selectedVariant?'-'+selectedVariant:'');
+  const existing = cart.find(i=>i.key===key);
+  if(existing) existing.qty = (existing.qty||0) + quantity;
+  else cart.push({ key, id:selectedProduct.id, name:selectedProduct.name, image:selectedProduct.img, variant: selectedVariant || 'estándar', price:selectedProduct.price, qty: quantity });
+  updateCartUI();
+}
+
+function buyNow(){
+  addToCart(1);
+  renderOrderSummary();
+  showSection('checkout-section');
+}
+
+function renderOrderSummary(){
+  const summary = $('#order-summary');
+  if(!summary) return;
+  if(cart.length===0){ summary.innerHTML = '<p>Carrito vacío.</p>'; return; }
+  let total=0;
+  summary.innerHTML = '';
+  cart.forEach(item=>{
+    total += item.price * item.qty;
+    const r = document.createElement('div');
+    r.style.display='flex'; r.style.justifyContent='space-between'; r.style.marginBottom='8px';
+    r.innerHTML = `<div>${item.name} <small style="color:#666">(${item.variant}) x${item.qty}</small></div><div>$${(item.price*item.qty).toLocaleString()}</div>`;
+    summary.appendChild(r);
+  });
+  const t = document.createElement('div'); t.style.marginTop='8px'; t.style.fontWeight='700'; t.textContent = 'Total: $' + total.toLocaleString();
+  summary.appendChild(t);
+}
+
+// --- Events binding after DOM ready ---
+document.addEventListener('DOMContentLoaded', ()=>{
+  // render tienda y destacados funcionales
+  renderProducts();
+  updateCartUI();
+
+  // nav anchors — show sections without full reload
+  $$('[data-nav]').forEach(a=> a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const href = a.getAttribute('href') || ('#' + a.textContent.trim().toLowerCase().replace(/\s+/g,'-'));
+    const id = href.startsWith('#') ? href.slice(1) : href;
+    showSection(id);
+  }));
+
+  // logo click -> inicio
+  $('#logo').addEventListener('click', ()=> showSection('inicio'));
+
+  $('#go-to-store').addEventListener('click', ()=> showSection('tienda'));
+
+  // open cart button -> checkout summary
+  $('#open-cart').addEventListener('click', (e)=>{ e.preventDefault(); renderOrderSummary(); showSection('checkout-section'); });
+
+  // add to cart flow uses modal to pick variant
+  $('#add-to-cart').addEventListener('click', ()=> {
+    // if product has no variants, add directly
+    // in este prototipo siempre mostramos el modal para seleccionar si hay variantes visuales
+    openModal();
+  });
+
+  $('#buy-now').addEventListener('click', ()=> buyNow());
+
+  // modal variant selection
+  $$('.variant').forEach(v=> v.addEventListener('click', ()=>{
+    $$('.variant').forEach(x=> x.classList.remove('selected'));
+    v.classList.add('selected');
+    selectedVariant = v.dataset.variant;
+  }));
+
+  $('#confirm-add').addEventListener('click', ()=>{
+    // default to first variant if none selected
+    if(!selectedVariant){
+      const first = $$('.variant')[0];
+      if(first){ first.classList.add('selected'); selectedVariant = first.dataset.variant; }
+    }
+    addToCart(1);
+    closeModal();
+  });
+
+  // modal dismiss
+  $('#modal').addEventListener('click', (e)=>{ if(e.target===$('#modal')) closeModal(); });
+
+  // finalize (fake)
+  $('#finalize').addEventListener('click', ()=>{
+    alert('Compra simulada: gracias!');
+    cart = []; updateCartUI(); renderOrderSummary(); showSection('inicio');
+  });
+
+  // contact form (simulado)
+  $('#contact-send').addEventListener('click', ()=>{
+    const name = $('#contact-name').value.trim();
+    const email = $('#contact-email').value.trim();
+    const msg = $('#contact-msg').value.trim();
+    if(!name || !email || !msg){
+      alert('Por favor completá todos los campos.');
+      return;
+    }
+    // en un proyecto real aquí harías fetch a un endpoint
+    alert('Mensaje enviado. ¡Gracias, ' + name + '!');
+    $('#contact-name').value = '';
+    $('#contact-email').value = '';
+    $('#contact-msg').value = '';
+    showSection('inicio');
+  });
+
+  // close modal with Esc
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
+
+  // make featured product cards open product detail
+  $$('.product-card[data-open]').forEach(card => {
+    card.addEventListener('click', ()=> openProduct(card.dataset.open));
+  });
+
+  // ensure initial visible section
+  showSection('inicio');
+});
+</script>
+</body>
+</html>
+
